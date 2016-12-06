@@ -10,6 +10,7 @@ use Bio::Index::Genbank;
 use Bio::AlignIO;
 use Bio::SimpleAlign;
 use Bio::SearchIO;
+use Cwd;
 
 
 ## Now have major program ##
@@ -39,6 +40,9 @@ if (! -e $loc){
 	system("mkdir $loc");
 }
 my $loc2 = "Alignment_files_prot/";
+
+my $pwd = cwd();
+print $pwd . "\n";
 
 my $table;
 if ($t eq 'orf'){
@@ -396,7 +400,7 @@ while (<RECIP>){
 	## We can now build the batch file and run the relative rate test ##
 	
 	
-	my $cmd = "echo \'13\n1\n1\n/DataStore/LabData/Teri/Take2/RefuteExtavour/$codalnfile\n" . $hash->{$mamid} . "\nCUSTOM\n012345\n\n3\n1\n4\n1\n1\n\' | HYPHYMP | less > $hyphyfile";
+	my $cmd = "echo \'13\n1\n1\n$pwd/$finalalnfile\n" . $hash->{$mamid} . "\nCUSTOM\n012345\n\n3\n1\n4\n1\n1\n\' | HYPHYMP | less > $hyphyfile";
 	system($cmd);
 
 	## We will now process the hyphy results into a table ##
